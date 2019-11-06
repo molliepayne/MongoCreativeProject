@@ -6,7 +6,8 @@ var flowers = [{
     name: 'China Aster: King Size Apricot',
     colors: 'pink, apricot, blush, orange',
     imageUrl: 'https://www.johnnyseeds.com/dw/image/v2/BBBW_PRD/on/demandware.static/-/Sites-jss-master/default/dwd0114608/images/products/flowers/03465_01_king_size_apricot.jpg?sw=387&cx=302&cy=0&cw=1196&ch=1196',
-    bloomMonths: 'July, August, September'
+    bloomMonths: 'July, August, September',
+    infoLink: 'https://www.johnnyseeds.com/flowers/aster/king-size-apricot-china-aster-seed-3465.html'
   },
   {
     name: 'Sunflower: ProCut® White Nite',
@@ -598,10 +599,10 @@ var flowers = [{
     }, 
     {
       name: 'Peony Kansas',
-      colors: '',
+      colors: 'pink',
       imageUrl: 'http://www.tulipworld.com/Shared/Images/Product/Kansas-Peony/36106-kanas-peony.jpg',
     bloomMonths: 'May, June', 
-    infoLink: ''
+    infoLink: 'http://www.tulipworld.com/Shared/Images/Product/Kansas-Peony/36106-kanas-peony.jpg'
     }, 
     {
       name: 'Peony Monsieur Jules Elie',
@@ -639,6 +640,28 @@ var flowers = [{
     infoLink: 'https://www.bulbsnblooms.com/rio-negro-oriental-lily--3-bulb3.html'
     }, 
      {
+      name: 'Peony Kansas',
+      colors: 'pink',
+      imageUrl: 'https://www.americanmeadows.com/media/catalog/product/c/o/coral-sunset_peony_visi115645_800x800_1.jpg?width=700&height=700&canvas=700:700&quality=80&bg-color=255,255,255&fit=bounds',
+    bloomMonths: 'May, June', 
+    infoLink: 'https://www.americanmeadows.com/perennials/peony/peony-coral-sunset?adpos=1o5&scid=scplp4974&sc_intid=4974&gclid=Cj0KCQiA2ITuBRDkARIsAMK9Q7M8YfI15FaME4xSV5F7fkVo9XNF6u6lFmyItbr4lyMa7K-zgsX0rJAaAgD_EALw_wcB'
+    }, 
+     {
+      name: 'Peony Allen P McConnell',
+      colors: 'pink, white, blush',
+      imageUrl: 'http://www.peonysenvy.biz/art/new_herb/allenmcconnell_0986.jpg',
+    bloomMonths: 'May, June', 
+    infoLink: 'http://www.peonysenvy.biz/e_allenpmcconnell.html'
+    }, 
+     {
+      name: 'Veronica Wizard of Ahhs',
+      colors: 'blue, violet',
+      imageUrl: 'https://wgi-img.s3.amazonaws.com/VarietyImage/afa96915b9aeb572c9656eb8daad70e8.jpg',
+      bloomMonths: 'July, August, September', 
+      infoLink: 'waltersgardens.com/variety.php?ID=VERWA'
+    }, 
+       
+     {
       name: 'Lily Soft Music',
       colors: 'lavendar, pink, white, cream',
       imageUrl: 'https://lilyflowerstore.com/wp-content/uploads/2016/02/Soft-Music-510x383.jpg',
@@ -649,7 +672,7 @@ var flowers = [{
     
 ];
 function compare(a, b) {
-   // console.log("in compare a: " + a +" b: " +  b);
+  //console.log("in compare a: " + a +" b: " +  b);
   const nameA = a.name.toUpperCase();
   const nameB = b.name.toUpperCase();
   
@@ -675,22 +698,15 @@ router.get('/getflowers', function(req, res, next) {
   //console.log("All FLowers: " + flowers);
   var filteredFlowers = flowers.filter(function(flower) {
     //console.log("query: " + req.query.color);
-    //console.log("flower colors " + flower.colors + " flower bloomtime: " + flower.bloomMonths);
+   // console.log("flower colors " + flower.colors + " flower bloomtime: " + flower.bloomMonths);
     if(flower.colors.search(req.query.color)>=0 && flower.bloomMonths.search(req.query.month)>=0  && flower.name.search(req.query.variety)>=0)
       return true;
   });
   //console.log("Filtered FLowers: " + filteredFlowers);
   filteredFlowers.sort(compare);
-  //console.log("Filtered FLowers: " + filteredFlowers);
+ // console.log("Filtered FLowers: " + filteredFlowers);
   res.status(200).json(filteredFlowers);
 
 });
 
 module.exports = router;
-
-
-
-
-
-
-//

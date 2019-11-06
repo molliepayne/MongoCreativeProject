@@ -11,7 +11,7 @@ var app = new Vue({
     loading: true,
     colors: ['red', 'blush', 'pink', 'black', 'lavendar', 'blue', 'purple', 'yellow', 'orange', 'apricot', 'white', 'cream', 'green'],
     months: ['March', 'April', 'May', 'June', 'July', 'August', 'September', 'October'],
-    varieties: ['Ageratum', 'Basil', 'Celosia', 'China Aster', 'Clarkia', 'Clary Sage', 'Columbine', 'Coneflower', 'Cosmos', 'Dianthus', 'Didiscus', 'Daffodil', 'Foxglove', 'Gladiolus', 'Hyacinth', 'Iris', 'Leucojum', 'Lily', 'Muscari', 'Narcissus', 'Peony', 'Phlox', 'Poppy', 'Queen Anne', 'Rudbeckia', 'Salvia', 'Sabiosa', 'Snapdragon', 'Strawflower', 'Sunflower', 'Tulip', 'Yarrow', 'Zinna'],
+    varieties: ['Ageratum', 'Basil', 'Celosia', 'China Aster', 'Clarkia', 'Clary Sage', 'Columbine', 'Coneflower', 'Cosmos', 'Dianthus', 'Didiscus', 'Daffodil', 'Foxglove', 'Gladiolus', 'Hyacinth', 'Iris', 'Leucojum', 'Lily', 'Muscari', 'Narcissus', 'Peony', 'Phlox', 'Poppy', 'Queen Anne', 'Rudbeckia', 'Salvia', 'Sabiosa', 'Snapdragon', 'Strawflower', 'Sunflower', 'Tulip', 'Yarrow', 'Zinnia'],
     Color: "Show All",
     ColorDrop: "Show All",
     Month: "Show All", 
