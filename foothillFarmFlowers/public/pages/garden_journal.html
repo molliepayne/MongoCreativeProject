@@ -1,184 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:fb="http://ogp.me/ns/fb#">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
 
 <head>
-  <meta property="og:image" content="http://foothillfarmflowers.com/CreativeProject3/images/iceland%20poppie.JPG"/>
+  <meta property="og:image" content="http://foothillfarmflowers.com/CreativeProject3/images/iceland%20poppie.JPG" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/styles.css" />
   <title>Foothill Farm Flowers - Garden Journal</title>
 </head>
 
 <body>
-  <a class="navbar-brand" href="../index.html">Foothill Farm Flowers</a>
+  <a class="navbar-brand " href="../index.html">Foothill Farm Flowers</a>
   <h2>Our micro urban farm located on the foothills in Provo, Utah</h2>
 
-
-  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <ul class="nav navbar-nav justify-content-center flex-fill">
-        <li class="nav-item">
-          <a class="nav-item nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-item nav-link active" href="garden_journal.html">Garden Journal</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-item nav-link" href="order blooms.html">Buy Blooms</a>
-          <ul class="dropdown" aria-label="submenu">
-            <li><a href="available.html">Availbility</a></li>
-            <li><a href="order blooms.html">Join CSA</a></li>
-            <li><a href="#">Roadside Stand</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-item nav-link" href="about.html">Our Story</a>
-        </li>
-      </ul>
-    </div>
-    <hr>
-  </nav>
-
-
-  <div class="parallax">
-    <h1>Garden Journal</h1>
-    <hr>
-  </div>
-  <div id="app">
-    <div clss="container">
-    <div class="row">
-      <div class="col-sm-9">
-
-        <div v-if="loading">
-          <p>Loading...</p>
-        </div>
-        <div v-else>
-          <hr>
-          <h2>Click any image below to go to our Instagram post! This is where we keep a record of what's happening at the farm.</h2>
-          <hr>
-          <p>
-            <center>
-              <button v-on:click="viewAll">View All</button>
-              <button v-on:click="mostLiked">Most Liked</button>
-              <button v-on:click="onTheFarm">On The Farm</button>
-              <button v-on:click="withComments">With Commments</button>
-              <button v-on:click="multipleImages">Mulptiple Pictures</button>
-            </center>
-          </p>
-
-          <div clss="container" v-if="instagrams.length > 0">
-
-            <div v-for="(insta, index) in filteredInstas" v-if="index%3===0" class="row">
-
-              <div class="col-sm-4">
-                <figure>
-
-                  <div class="insta">{{postDate(insta.caption.created_time*1000)}}</div>
-
-                  <a :href="insta.link">
-                  <img class="instaPic" :src="insta.images.low_resolution.url" :alt="insta.text"/>
-                </a>
-
-                  <figcaption class="insta">{{insta.caption.text.substr(0, 40) + "..."}}</figcaption>
-                </figure>
-              </div>
-              <div class="col-sm-4">
-
-                <figure v-if="filteredInstas.length-1 > index+1">
-                  <div class="insta">{{postDate(instagrams[index+1].caption.created_time*1000)}}</div>
-                  <a :href="filteredInstas[index+1].link">
-                  <img class="instaPic" :src="filteredInstas[index+1].images.low_resolution.url" :alt="filteredInstas[index+1].text"/>
-                </a>
-                  <figcaption class="insta">{{filteredInstas[index+1].caption.text.substr(0, 40) + "..."}}</figcaption>
-                </figure>
-              </div>
-              <div class="col-sm-4">
-
-                <figure v-if="filteredInstas.length-1 > index+2">
-                  <div class="insta">{{postDate(instagrams[index+2].caption.created_time*1000)}}</div>
-                  <a :href="filteredInstas[index+2].link">
-                  <img class="instaPic" :src="filteredInstas[index+2].images.low_resolution.url" :alt="filteredInstas[index+2].text"/>
-                </a>
-                  <figcaption class="insta">{{filteredInstas[index+2].caption.text.substr(0, 40) + "..."}}</figcaption>
-                </figure>
-              </div>
-            </div>
-
-          </div>
-          <div v-else class="loading"></div>
-
-        </div>
-      </div>
-
-
-      <div class="col-sm-3 blog-sidebar">
-        <div class="sidebar-module sidebar-module-inset">
-          <div v-if="loadingWeather">
-            <p>Loading Weather...</p>
-          </div>
-          <div v-else>
-            <h3>Today's Farm Weather</h3>
-            <ul>{{postDateMin(this.weather[0].lastData.dateutc)}}</ul>
-            <hr>
-            <ul>Temperature: {{this.weather[0].lastData.tempf}} &#176;F</ul>
-            <ul>Wind: {{this.weather[0].lastData.windspeedmph}} mph</ul>
-            <ul>Wind Gust: {{this.weather[0].lastData.windgustmph}} mph</ul>
-            <ul>Today's Rainfall: {{this.weather[0].lastData.dailyrainin}} inches</ul>
-            <ul>Humidity: {{this.weather[0].lastData.humidity}} %</ul>
-
-
-            <hr>
-            </div>
-            <div class="sidebar-module sidebar-module-inset">
-              <div v-if="loadingWeatherHistory">
-            <p>Loading Weather History...</p>
-          </div>
-          <div v-else>
-              <h3>Farm Weather History</h3>
-
-              <hr>
-              <ul>Today's Max Wind Gust: {{this.weather[0].lastData.maxdailygust}} mph</ul>
-              <ul>This Week's Rainfall: {{this.weather[0].lastData.weeklyrainin}} inches</ul>
-              <ul>This Month's Rainfall: {{this.weather[0].lastData.monthlyrainin}} inches</ul>
-              <ul>This Year's Rainfall: {{this.weather[0].lastData.totalrainin}} inches</ul>
-              <ul>Date of Last Rainfall: {{postDate(this.weather[0].lastData.lastRain)}}</ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-  <div class="parallaxmid">
-
-  </div>
-
-
-  <footer>
-    <h2>Connect</h2>
-    <div class="container">
-      <!--Grid row-->
-      <div class="row">
-        <div class="col">
-          <a href="mailto:mollie@byu.net"> <img class="icon" src="../images/email-png-3.png" class="img-fluid mb-4" alt="email" ></a>
-        </div>
-        <div class="col">
-          <a href="https://www.instagram.com/foothillfarmflowers/"></a><img class="icon" src="../images/instagram-icon.png" class="img-fluid mb-4" alt="instagram"></a>
-        </div>
-        <div class="col">
-          <a href="https://github.com/molliepayne/CreativeProject3"><img class="icon" src="../images/git hub icon.png" class="img-fluid mb-4" alt="github" ></a>
-        </div>
-        <div class="col">
-          <a href="https://www.facebook.com/foothillfarmflowers/"><img class="icon" src="../images/facebook icon.png" class="img-fluid mb-4" alt="facebook" ></a>
-        </div>
-      </div>
-      <!--Grid row-->
-    </div>
-
+  <div class="content">
     <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -194,21 +28,172 @@
           </li>
           <li class="nav-item">
             <a class="nav-item nav-link" href="order blooms.html">Buy Blooms</a>
-           <ul class="dropdown" aria-label="submenu">
-            <li><a href="available.html">Availbility</a></li>
-            <li><a href="order blooms.html">Join CSA</a></li>
-            <li><a href="#">Roadside Stand</a></li>
-          </ul>
+            <ul class="dropdown" aria-label="submenu">
+              <li><a href="available.html">Availbility</a></li>
+              <li><a href="order blooms.html">Join CSA</a></li>
+              <li><a href="#">Roadside Stand</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-item nav-link" href="about.html">Our Story</a>
           </li>
         </ul>
-
       </div>
       <hr>
     </nav>
-    <hr> All Rights Reserved, Mollie Payne<br>
+
+
+    <div class="parallax">
+      <h1>Garden Journal</h1>
+      <hr>
+    </div>
+    <div id="app">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-9">
+
+            <div v-if="loading">
+              <p>Loading...</p>
+            </div>
+            <div v-else>
+              <hr>
+              <h2>Click any image below to go to our Instagram post! This is where we keep a record of what's happening at the farm.</h2>
+              <hr>
+
+
+              <div class="container" v-if="instagrams.length > 0">
+
+                <div v-for="(insta, index) in filteredInstas">
+
+                  <div class="col-sm-4">
+                    <div class="instaContainer">
+                      <figure>
+
+                        <div class="insta">{{postDate(insta.caption.created_time*1000)}}</div>
+                      <div v-if="insta.location" class="insta">Location: {{insta.location.name}}</div>
+                            <a :href="insta.link">
+                          <img class="instaPic" :src="insta.images.low_resolution.url" :alt="insta.text"/>
+                  <div class="insta-hover">
+                      <div class="insta-info">
+                        <div class="comments-count-container">
+                          <img src="../images/comments-icon-16.jpg" style="width:55%;"/> 
+                          <div class="commentsposition">{{insta.comments.count}} </div></div>
+                          <div class="comments-count-container">
+                            <img src="../images/like-icon-16.jpg" style="width:55%;"/> 
+                         <div class="likesposition">{{insta.likes.count}}</div></div>
+                      </div>
+                  </div>
+                </a>
+                      
+                      <figcaption class="insta">{{insta.caption.text.substr(0, 40) + "..."}}</figcaption>
+                    </figure>
+                  </div></div>
+                  
+                </div>
+
+              </div>
+              <div v-else class="loading"></div>
+
+            </div>
+
+
+          </div>
+          <div class="col-sm-3">
+            <div class="sidebar-module sidebar-module-inset">
+              <div v-if="loadingWeather">
+                <p>Loading Weather...</p>
+              </div>
+              <div v-else>
+                <h3>Today's Farm Weather</h3>
+                <ul>{{postDateMin(this.weather[0].lastData.dateutc)}}</ul>
+                <hr>
+                <ul>Temperature: {{this.weather[0].lastData.tempf}} &#176;F</ul>
+                <ul>Wind: {{this.weather[0].lastData.windspeedmph}} mph</ul>
+                <ul>Wind Gust: {{this.weather[0].lastData.windgustmph}} mph</ul>
+                <ul>Today's Rainfall: {{this.weather[0].lastData.dailyrainin}} inches</ul>
+                <ul>Humidity: {{this.weather[0].lastData.humidity}} %</ul>
+
+
+                <hr>
+
+                <div class="sidebar-module sidebar-module-inset">
+                  <div v-if="loadingWeather">
+                    <p>Loading Weather History...</p>
+                  </div>
+                  <div v-else>
+                    <h3>Farm Weather History</h3>
+
+                    <hr>
+                    <ul>Today's Max Wind Gust: {{this.weather[0].lastData.maxdailygust}} mph</ul>
+                    <ul>This Week's Rainfall: {{this.weather[0].lastData.weeklyrainin}} inches</ul>
+                    <ul>This Month's Rainfall: {{this.weather[0].lastData.monthlyrainin}} inches</ul>
+                    <ul>This Year's Rainfall: {{this.weather[0].lastData.totalrainin}} inches</ul>
+                    <ul>Date of Last Rainfall: {{postDate(this.weather[0].lastData.lastRain)}}</ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="parallaxmid">
+
+    </div>
+
+
+    <footer>
+      <h2>Connect</h2>
+      <div class="container">
+        <!--Grid row-->
+        <div class="row">
+          <div class="col">
+            <a href="mailto:mollie@byu.net"> <img class="icon" src="../images/email-png-3.png" class="img-fluid mb-4" alt="email" ></a>
+          </div>
+          <div class="col">
+            <a href="https://www.instagram.com/foothillfarmflowers/"></a><img class="icon" src="../images/instagram-icon.png" class="img-fluid mb-4" alt="instagram"></a>
+          </div>
+          <div class="col">
+            <a href="https://github.com/molliepayne/NodeCreativeProject"><img class="icon" src="../images/git hub icon.png" class="img-fluid mb-4" alt="github" ></a>
+          </div>
+          <div class="col">
+            <a href="https://www.facebook.com/foothillfarmflowers/"><img class="icon" src="../images/facebook icon.png" class="img-fluid mb-4" alt="facebook" ></a>
+          </div>
+        </div>
+        <!--Grid row-->
+      </div>
+
+      <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <ul class="nav navbar-nav justify-content-center flex-fill">
+            <li class="nav-item">
+              <a class="nav-item nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-item nav-link active" href="garden_journal.html">Garden Journal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-item nav-link" href="order blooms.html">Buy Blooms</a>
+              <ul class="dropdown" aria-label="submenu">
+                <li><a href="available.html">Availbility</a></li>
+                <li><a href="order blooms.html">Join CSA</a></li>
+                <li><a href="#">Roadside Stand</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-item nav-link" href="about.html">Our Story</a>
+            </li>
+          </ul>
+
+        </div>
+        <hr>
+      </nav>
+  </div>
+  <hr> All Rights Reserved, Mollie Payne<br>
 
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
@@ -219,7 +204,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+
   <script src="../javascripts/script.js"></script>
+
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 {
-  "name": "foothillfarmflowers",
+  "name": "mongocreativeproject",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,6 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "jQuery": "^1.7.4",
     "jade": "~1.11.0",
     "jquery": "^3.4.1",
     "morgan": "~1.9.1",

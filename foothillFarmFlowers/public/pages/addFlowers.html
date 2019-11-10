@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/styles.css" />
   
-  <title>Foothill Farm - Available Varieties</title>
+  <title>Foothill Farm - Add Flowers</title>
 </head>
 
 <body>
@@ -44,38 +44,23 @@
     <hr>
   </nav>
   <div class="parallax">
-    <h1>Flower Availbility</h1>
+    <h1>Add Flowers to Database</h1>
   </div>
   <hr>
   <div id="app">
-    
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4"> <h2>Select Color:</h2> <select class="selector" @change="getflowers($event.target.value)"  style="width: 25;" v-model="ColorDrop" id="colors">
-      <option class="selector"  v-bind:value="'Show All'">Show All</option>
-      <option class="selector"  v-for="color in colors" v-bind:value="color">
-        {{color }}
-      </option>
-    </select></div>
-     <div class="col-sm-4"><h2> Month Needed:</h2><select class="selector" @change="getflowers($event.target.value)"  style="width: 25;" v-model="MonthDrop" id="month">
-      <option class="selector"   v-bind:value="'Show All'">Show All</option>
-      <option class="selector"  v-for="month in months" v-bind:value="month">
-        {{month }}
-      </option>
-    </select>
-    </div>
-    <div class="col-sm-4"><h2> Flower Variety:</h2><select class="selector" @change="getflowers($event.target.value)"  style="width: 25;" v-model="VarietyDrop" id="variety">
-      <option class="selector"   v-bind:value="'Show All'">Show All</option>
-      <option class="selector"  v-for="variety in varieties" v-bind:value="variety">
-        {{variety }}
-      </option>
-    </select>
-    </div>
-    </div>
-    
-  </div>
-    <hr>
-   
+  
+    <h3> Enter A New Flower</h3>
+    <form v-on:submit.prevent="addFlower">
+        
+      Name: <input type="text" v-model="flowerName"><br><br>
+      Flower Colors: <input type="text" v-model="flowerColors"><br><br>
+      Image URL: <input type="url" v-model="imageUrl"><br><br>
+      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
+      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
+      Flower Variety: <input type="text" v-model="flowerVariety">
+      <button type="submit">Add</button>
+    </form>
+   <hr>
     <div class="container" v-if='flowers.length'>
 
         <div v-for="flower in flowers">
@@ -96,18 +81,6 @@
       <br>
       <h3>Try selecting a different color or a different month.</h3>
     </div>
-    <hr>
-    <h3> Enter A New Flower</h3>
-    <form class="selector" v-on:submit.prevent="addFlower">
-        
-      Name: <input  type="text" v-model="flowerName"><br><br>
-      Flower Colors: <input  type="text" v-model="flowerColors"><br><br>
-      Image URL: <input type="url" v-model="imageUrl"><br><br>
-      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
-      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
-      Flower Variety: <input type="text" v-model="flowerVariety">
-      <button type="submit">Add</button>
-    </form>
   </div>
   <hr>
 

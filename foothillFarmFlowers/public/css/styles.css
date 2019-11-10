@@ -1,9 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=Tangerine);
 @import url(https://fonts.googleapis.com/css?family=Quicksand);
-@import url(https://fonts.googleapis.com/css?family=Parisienne);
-@import url(https://fonts.googleapis.com/css?family=Herr+Von+Muellerhoff&display=swap);
 @import url(https://fonts.googleapis.com/css?family=Amatic+SC);
 @import url(https://fonts.googleapis.com/css?family=Sacramento);
+
 
 html {
     height: 100%;
@@ -26,9 +24,13 @@ body {
 
 }
 
-.dropdown {
-    color: #fff;
-    text-shadow: 2px 2px 2px #aaa;
+
+
+.navbar-nav {
+    font-family: 'Quicksand', serif;
+    font-weight: bold;
+    font-size: 20px;
+   
 }
 
 .flowerPic {
@@ -40,8 +42,13 @@ body {
   top: 0;
   width: 100%;
 }
+
 .instaPic{
 max-width: 100%;
+}
+
+.instaPic:hover{
+opacity: .5;
 }
 
 .selector {
@@ -56,7 +63,8 @@ max-width: 100%;
 .navbar-nav {
     font-family: 'Quicksand', serif;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 20px;
+   
 }
 
 a:link,
@@ -147,10 +155,13 @@ ul li ul li {
     -webkit-transition: opacity .25s ease-in-out;
 }
 
+
 img:hover {
     opacity: 0.5;
 }
-
+.box-shadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .parallax {
     /* The image used */
     background: linear-gradient( rgba(255, 255, 255, 0.3),
@@ -170,12 +181,63 @@ img:hover {
 
 }
 
+.insta-hover {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 16px;
+}
+
+
+
+.instaContainer:hover .insta-hover {
+  opacity: 1;
+}
+
+.insta-info {
+  
+  color: black;
+   font-size: 5.9vw;
+ 
+}
+.comments-count-container {
+  position: relative;
+  text-align: center;
+  color: black;
+   font-size: 100%;
+   font-family: 'Quicksand', sans-serif;
+ 
+}
+.commentsposition {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+   font-size: 100%;
+   font-family: 'Quicksand', sans-serif;
+}
+.likesposition {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100%;
+   font-family: 'Quicksand', sans-serif;
+    
+}
+
 .parallaxmid {
     /* The image used */
-    background-image: url("../images/iceland poppie.JPG");
+    background: linear-gradient( rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.3)), url("../images/iceland poppie.JPG");
 
     /* Set a specific height */
-    min-height: 300px;
+    min-height:200px;
 
     /* Create the parallax scrolling effect */
     background-attachment: fixed;
@@ -186,8 +248,8 @@ img:hover {
 }
 
 h1 {
-    font-family: 'Herr Von Muellerhoff', cursive;
-    font-size: 96px;
+    font-family: 'Amatic SC', cursive;
+    font-size: 72px;
     text-align: center;
     padding-bottom: 20px;
     padding-top: 40px;
@@ -242,7 +304,7 @@ section {
 
 aside {
     padding-left: 20px;
-    flex: 1;
+    flex: 2;
 }
 
 article {
@@ -285,7 +347,7 @@ article {
 }
 
 .icon {
-    width: 100px;
+    width: 60px;
 }
 
 /* Sidebar modules for boxing content */
@@ -309,4 +371,7 @@ article {
 
 .container {
     max-width: 60rem;
+}
+.container-sm {
+    max-width: 40rem;
 }
