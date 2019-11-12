@@ -94,7 +94,7 @@ router.get('/weather', function(req, res, next) {
    // console.log("apiKey: " + apiKey);
     var applicationKey = req.query.applicationKey;
     var weatherrest = 'https://api.ambientweather.net/v1/devices/?apiKey=' + apiKey + '&applicationKey=' + applicationKey;
-   // console.log(weatherrest);
+    console.log(weatherrest);
     request(weatherrest).pipe(res);
 });
 
