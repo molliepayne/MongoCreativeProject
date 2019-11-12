@@ -63,35 +63,84 @@
 
               <div class="container" v-if="instagrams.length > 0">
 
-                <div v-for="(insta, index) in filteredInstas">
+                <div v-for="(insta, index) in instagrams"  v-if="index%3===0" class="row">
 
-                  <div class="col-sm-4">
+                <div class="col-sm-4">
+
+                  <figure>
+
+                    <div class="insta">{{postDate(insta.caption.created_time*1000)}}</div>
+                    <div v-if="insta.location" class="insta">Location: {{insta.location.name}}</div>
                     <div class="instaContainer">
-                      <figure>
-
-                        <div class="insta">{{postDate(insta.caption.created_time*1000)}}</div>
-                      <div v-if="insta.location" class="insta">Location: {{insta.location.name}}</div>
-                            <a :href="insta.link">
+                      
+                      <a :href="insta.link">
+                          
                           <img class="instaPic" :src="insta.images.low_resolution.url" :alt="insta.text"/>
                   <div class="insta-hover">
-                      <div class="insta-info">
+                      
                         <div class="comments-count-container">
-                          <img src="../images/comments-icon-16.jpg" style="width:55%;"/> 
+                          <img src="../images/comments-icon-16.jpg" style="width:45%;"/> 
                           <div class="commentsposition">{{insta.comments.count}} </div></div>
                           <div class="comments-count-container">
-                            <img src="../images/like-icon-16.jpg" style="width:55%;"/> 
+                            <img src="../images/heart-icon-png-transparent-17.jpg" style="width:55%;"/> 
                          <div class="likesposition">{{insta.likes.count}}</div></div>
-                      </div>
+                      
                   </div>
                 </a>
+                    </div>
+                    <figcaption class="insta">{{insta.caption.text.substr(0, 40) + "..."}}</figcaption>
+                  </figure>
+                  </div>
+                  <div v-if="index <19" class="col-sm-4">
+                    <figure>
+                      <div class="insta">{{postDate(instagrams[index+1].caption.created_time*1000)}}</div>
+                      <div v-if="instagrams[index+1].location" class="insta">Location: {{instagrams[index+1].location.name}}</div>
+                      <div class="instaContainer">
+                        <a :href="instagrams[index+1].link">
+                          <img class="instaPic" :src="instagrams[index+1].images.low_resolution.url" :alt="instagrams[index+1].text"/>
+                          <div class="insta-hover">
+                            <div class="comments-count-container">
+                              <img src="../images/comments-icon-16.jpg" style="width:45%;"/> 
+                              <div class="commentsposition">{{instagrams[index+1].comments.count}} </div>
+                              </div>
+                              <div class="comments-count-container">
+                                <img src="../images/heart-icon-png-transparent-17.jpg" style="width:55%;"/> 
+                             <div class="likesposition">{{instagrams[index+1].likes.count}}</div></div>
                       
-                      <figcaption class="insta">{{insta.caption.text.substr(0, 40) + "..."}}</figcaption>
+                          </div>
+                          </a>
+                      </div>
+                      <figcaption class="insta">{{instagrams[index+1].caption.text.substr(0, 40) + "..."}}</figcaption>
                     </figure>
-                  </div></div>
-                  
+                  </div>
+                  <div v-if="index < 17" class="col-sm-4">
+                    <figure>
+
+                      <div class="insta">{{postDate(instagrams[index+2].caption.created_time*1000)}}</div>
+                      <div v-if="instagrams[index+2].location" class="insta">Location: {{instagrams[index+1].location.name}}</div>
+                      <div class="instaContainer">
+                        <a :href="instagrams[index+2].link">
+                          <img class="instaPic" :src="instagrams[index+2].images.low_resolution.url" :alt="instagrams[index+2].text"/>
+                  <div class="insta-hover">
+                      
+                        <div class="comments-count-container">
+                          <img src="../images/comments-icon-16.jpg" style="width:45%;"/> 
+                          <div class="commentsposition">{{instagrams[index+2].comments.count}} </div></div>
+                          <div class="comments-count-container">
+                            <img src="../images/heart-icon-png-transparent-17.jpg" style="width:55%;"/> 
+                         <div class="likesposition">{{instagrams[index+2].likes.count}}</div></div>
+                      
+                  </div>
+                </a>
+                      </div>
+                      <figcaption class="insta">{{instagrams[index+2].caption.text.substr(0, 40) + "..."}}</figcaption>
+                    </figure>
+                  </div> 
                 </div>
 
               </div>
+
+
               <div v-else class="loading"></div>
 
             </div>
