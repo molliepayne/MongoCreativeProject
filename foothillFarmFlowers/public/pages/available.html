@@ -24,17 +24,18 @@
         <li class="nav-item">
           <a class="nav-item nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-item nav-link" href="garden_journal.html">Garden Journal</a>
-        </li>
-        <li class="nav-item">
+        <li class="dropdown">
           <a class="nav-item nav-link active" href="order blooms.html">Buy Blooms</a>
-          <ul class="dropdown" aria-label="submenu">
+          <ul class="dropdown-menu">
             <li><a href="available.html">Availbility</a></li>
             <li><a href="order blooms.html">Join CSA</a></li>
             <li><a href="#">Roadside Stand</a></li>
           </ul>
         </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="garden_journal.html">Garden Journal</a>
+        </li>
+        
         <li class="nav-item">
           <a class="nav-item nav-link" href="about.html">Our Story</a>
         </li>
@@ -96,18 +97,7 @@
       <br>
       <h3>Try selecting a different color or a different month.</h3>
     </div>
-    <hr>
-    <h3> Enter A New Flower</h3>
-    <form class="selector" v-on:submit.prevent="addFlower">
-        
-      Name: <input  type="text" v-model="flowerName"><br><br>
-      Flower Colors: <input  type="text" v-model="flowerColors"><br><br>
-      Image URL: <input type="url" v-model="imageUrl"><br><br>
-      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
-      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
-      Flower Variety: <input type="text" v-model="flowerVariety">
-      <button type="submit">Add</button>
-    </form>
+    
   </div>
   <hr>
 

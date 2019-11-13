@@ -32,7 +32,7 @@ var app = new Vue({
  
    
     async addPerson(){
-      var url = "http://foothillfarmflowers.com:8080/mailingList";
+      var url = "http://foothillfarmflowers.com/flowers/mailingList";
       axios.post(url, {
         firstName: this.firstName,
         lastName: this.lastName,

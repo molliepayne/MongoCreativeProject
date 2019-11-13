@@ -10,6 +10,7 @@ let app = new Vue({
   el: '#app',
   data: {
     //userID and access token for Instagram API
+    //userID: '44673461',//personal userID - need access token
     userID: '16597939728',
     accessToken: '16597939728.1677ed0.3f7231da4a16483ea64cf829725edc5d',
     nextURL: '',
@@ -47,18 +48,20 @@ mounted() {
   methods: {
     
      nextInsta(){
-         //console.log("hit bottom!");
-           //console.log("in next instagram URL: " + this.nextURL);
+        
+           console.log("in next instagram URL: " + this.nextURL);
            if(this.nextURL !='')
-           {
+           {this.loadingNext = true;
             axios.get(this.nextURL)
         .then(response => {
-          this.loadingNext = true;
+          
+          console.log("next intas: " +this.loadingNext );
           //console.log("Pagination url: " + response.data.pagination.next_url);
           if(response.data.pagination.next_url === undefined)
               this.nextURL = "";
           else
             this.nextURL = response.data.pagination.next_url;
+          console.log("next URSL: "+ this.nextURL);
           //console.log("instagrams: " + this.instagrams);
           //console.log("response data: " + response.data.data);
           var newArray = this.instagrams;
@@ -75,10 +78,14 @@ mounted() {
         })
         .catch(error => {
           console.log(error)
-        });}  
+        });
+             
+           }  
     },
     scroll(){
       window.onscroll = () => {
+        //console.log(this.loadingNext);
+        if(!this.loadingNext){
         var height = Math.max(
             document.body.scrollHeight, 
             document.body.clientHeight, 
@@ -86,18 +93,20 @@ mounted() {
             document.documentElement.scrollHeight, 
             document.documentElement.offsetHeight, 
             document.documentElement.clientHeight);
-        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === height;
+            //console.log("height: "+ height);
+            //console.log("scroll top + window height: " + document.documentElement.scrollTop + " " +window.innerHeight);
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= height-(window.innerHeight/1.5);
        
         if(bottomOfWindow){
             this.nextInsta();
         } 
       
-     }
+     }}
      
     },
     
     instaREST() {
-       //console.log("in instagram");
+       console.log("in instagram");
       /*axios.get('https://api.instagram.com/v1/users/' + this.userID + '/media/recent?access_token=' + this.accessToken )
         .then(response => {
           this.loading = true;
@@ -117,7 +126,7 @@ mounted() {
       //run a proxy to get Instagram information
       //console.log("Insta REST: " + this.show);
       this.loading = true;
-      var url = "/insta?UserID=" + this.userID + "&AccessToken=" + this.accessToken;
+      var url = "/flowers/insta?UserID=" + this.userID + "&AccessToken=" + this.accessToken;
       //console.log("URL " + url);
       fetch(url)
         .then((data) => {
@@ -142,7 +151,7 @@ mounted() {
       //run a proxy to get weather information
       //console.log("Weather REST: ");
       this.loadingWeather = true;
-      var url = "/weather?apiKey=" + this.apiKey + "&applicationKey=" + this.aplicationKey;
+      var url = "/flowers/weather?apiKey=" + this.apiKey + "&applicationKey=" + this.aplicationKey;
       console.log("URL " + url);
       fetch(url)
         .then((data) => {
@@ -160,7 +169,7 @@ mounted() {
 
     },
     postDate: function(date) {
-       console.log("post date instagrams length:" + this.instagrams.length) ;
+       
       return moment(date).format('MMMM Do YYYY');
     },
     postDateMin: function(date) {

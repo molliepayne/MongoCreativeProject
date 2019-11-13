@@ -44,16 +44,58 @@ body {
   width: 100%;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.25s ease-out;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .instaPic{
 max-width: 100%;
 position: relative;
+
 }
+
 
 .instaPic:hover{
 opacity: .5;
 
 }
+.userInput{
+     position: relative;
+    width: 100%;
+    font-size: 16px;
+    text-align: left;
+}
 
+
+  .autocomplete-results {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #eeeeee;
+    height: 100%;
+    overflow: auto;
+    font-size: 16px;
+  }
+
+  .autocomplete-result {
+    list-style: none;
+    text-align: left;
+    padding: 4px 2px;
+    cursor: pointer;
+    color:black;
+    font-size: 16px;
+  }
+
+  .autocomplete-result:hover {
+    background-color: pink;
+    color: white;
+  }
+input{
+    width: 100%;
+}
 .selector {
     font-family: 'Quicksand', sans-serif;
     font-size: 24px;
@@ -69,12 +111,19 @@ opacity: .5;
   transform: translate(-50%, -100%);
   font-size: 16px;
 }
+.dropdown-menu{
+position: relative;
+top: 55px;
+}
 
 .navbar-nav {
     font-family: 'Quicksand', serif;
     font-weight: bold;
     font-size: 20px;
    
+}
+.navbar{
+    max-height: 50px;
 }
 
 a:link,

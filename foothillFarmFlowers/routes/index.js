@@ -127,8 +127,20 @@ router.get('/getflowers', function(req, res, next) {
  
 
 });
-
-
+router.delete('/getflowers/:id', async (req, res) => {
+  console.log("In DELTE on server: " + req.params.id);
+  console.log("Collection before: " + collection.find());
+  try {
+    await collection.deleteOne({ 
+      _id: req.params.id 
+    });
+    console.log("Collection after: " +collection.find());
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
 
 
 router.post('/getflowers', function(req, res) {

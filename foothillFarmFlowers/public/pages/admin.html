@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/styles.css" />
+  <title>Foothill Farm Flowers Admin</title>
+</head>
+
+<body>
+  
+   <a class="navbar-brand" href="#">Foothill Farm Flowers Admin Page</a>
+  
+ <div id="admin">
+    
+  <div class="container">
+       <h3> Enter A New Flower</h3>
+    <form class="selector" v-on:submit.prevent="addFlower">
+        <div class="userInput">
+      Name: <input  type="text" v-model="flowerName"><br><br>
+      Flower Colors: <input  type="text" v-model="flowerColors"><br><br>
+      Image URL: <input type="url" v-model="imageUrl"><br><br>
+      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
+      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
+      
+        Flower Variety:  <input type="text"  v-model="findVariety" @input="onChange"/>
+        <ul   class="autocomplete-results">
+            <li  v-for="(variety, i) in suggestions"
+      :key="i" @click="setSuggestion(variety)"
+      class="autocomplete-result">
+              {{ variety}}  
+            </li><br>
+        </ul>
+     
+ 
+      <button type="submit">Add</button>
+      </div>
+    </form>
+      
+    <div class="row">
+      <div class="col-sm-4"> <h2>Select Color:</h2> <select class="selector" @change="getflowers($event.target.value)"  style="width: 25;" v-model="ColorDrop" id="colors">
+      <option class="selector"  v-bind:value="'Show All'">Show All</option>
+      <option class="selector"  v-for="color in colors" v-bind:value="color">
+        {{color }}
+      </option>
+    </select></div>
+     <div class="col-sm-4"><h2> Month Needed:</h2><select class="selector" @change="getflowers($event.target.value)"  style="width: 25;" v-model="MonthDrop" id="month">
+      <option class="selector"   v-bind:value="'Show All'">Show All</option>
+      <option class="selector"  v-for="month in months" v-bind:value="month">
+        {{month }}
+      </option>
+    </select>
+    </div>
+    <div class="col-sm-4"><h2> Flower Variety:</h2><select class="selector" @change="getflowers($event.target.value)"  style="width: 25;" v-model="VarietyDrop" id="variety">
+      <option class="selector"   v-bind:value="'Show All'">Show All</option>
+      <option class="selector"  v-for="variety in varieties" v-bind:value="variety">
+        {{variety }}
+      </option>
+    </select>
+    </div>
+    </div>
+    
+  </div>
+    <hr>
+   
+    <div class="container" v-if='flowers.length'>
+
+        <div v-for="(flower, index) in flowers">
+          <div class="row">
+              
+            <div class="col-md-4"><a :href="flower.infoLink"><img class='flowerPic' v-bind:src="flower.imageUrl" /></a><br><a :href="flower.infoLink">Image Source</a></div>
+            <div class="col-md-8">
+                <p class="userInput">
+                    Name: <input v-model="flowers[index].name"><br>
+                    Image URL: <input v-model="flowers[index].imageUrl"><br>
+                    Image Source: <input v-model="flowers[index].infoLink"><br>
+              In Bloom: <input v-model="flowers[index].bloomMonths"><br>
+              Colors: <input v-model="flowers[index].colors">
+              Variety: <input v-model="flowers[index].variety"></p>
+              <button @click="deleteItem(flowers[index])">Delete</button>
+        <button @click="editItem(flowers[index])">Edit</button>
+            </div>
+           
+          </div>
+         <hr>
+        </div>
+    </div>
+    <div v-else>
+      <hr>
+      <h2>No Flowers Match!</h2>
+      <br>
+      <h3>Try selecting a different color or a different month.</h3>
+    </div>
+    
+  
+  <hr>
+   
+  </div>
+  </div>
+</footer>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="../javascripts/admin.js"></script>
+</body>
+</html>
