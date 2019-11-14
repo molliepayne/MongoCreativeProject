@@ -97,7 +97,18 @@
       <br>
       <h3>Try selecting a different color or a different month.</h3>
     </div>
-    
+    <hr>
+    <h3> Enter A New Flower</h3>
+    <form class="selector" v-on:submit.prevent="addFlower">
+        
+      Name: <input  type="text" v-model="flowerName"><br><br>
+      Flower Colors: <input  type="text" v-model="flowerColors"><br><br>
+      Image URL: <input type="url" v-model="imageUrl"><br><br>
+      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
+      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
+      Flower Variety: <input type="text" v-model="flowerVariety">
+      <button type="submit">Add</button>
+    </form>
   </div>
   <hr>
 

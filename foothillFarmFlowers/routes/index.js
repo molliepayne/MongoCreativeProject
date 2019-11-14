@@ -1,53 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var request = require("request");
+
+var mongoose = require('mongoose');
+var Flower = mongoose.model('Flower');
+
 var fs = require('fs');
 var BootstrapVue= require("bootstrap-vue");
 var mailingList = [];
-var mongodb = require('mongodb');
-
-// We need to work with "MongoClient" interface in order to connect to a mongodb server.
-var MongoClient = mongodb.MongoClient;
-
-// Connection URL. This is where your mongodb server is running.
-var dbUrl = 'mongodb://localhost:27017/';
-
-// we will use this variable later to insert and retrieve a "collection" of data
-var collection
-
-// Use connect method to connect to the Server
-MongoClient.connect(dbUrl, { useNewUrlParser: true }, function(err, client) {
-  //console.log("Connnecting...");
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  }
-  else {
-    // HURRAY!! We are connected. :)
-    console.log('Connection established to', dbUrl);
-    
-    /**
-     * TODO: insert data here, once we've successfully connected
-     */
-       var db = client.db('flowers'); //Connect to the database flowers
-    db.createCollection('availableFlowers', function(err, result) { // If it exists, it will just connect to it
-      collection = result;
-      // Do something with the collection here
-       // Only do the insert if the collection is empty
-      collection.stats(function(err, stats) {
-        if (err) { console.log(err) }
-        if (stats.count == 0) { // If we havent inserted before, put the default in
-          collection.insertMany(flowers, function(err, result) {
-            if (err) { console.log(err) }
-            else {
-              console.log('Inserted documents into the "availableFlowers" collection. The documents inserted with "_id" are:', result.length, result);
-            }
-          });
-        }
-      });
-    }); // Get the collection
-  }
-});
-
 
 function compare(a, b) {
   //console.log("in compare a: " + a +" b: " +  b);
@@ -98,42 +58,75 @@ router.get('/weather', function(req, res, next) {
     request(weatherrest).pipe(res);
 });
 
+router.get('/getflowers/:flower', function(req, res) {
+  res.json(req.flower);
+});
+
+router.param('flower', function(req, res, next, id) {
+  var query = Flower.findById(id);
+  query.exec(function (err, flower){
+    if (err) { return next(err); }
+    if (!flower) { return next(new Error("can't find flower")); }
+    req.flower = flower;
+    return next();
+  });
+});
 
 router.get('/getflowers', function(req, res, next) {
+  
   //console.log("in get flower route")
-   collection.find().toArray(function(err, result) {
-    if (err) { console.log(err); }
-    else if (result.length) {
-      console.log("Query Worked");
-      //console.log(result);
-      //res.send(result);
-       //console.log("All FLowers: " + flowers);
-  var filteredFlowers = result.filter(function(flower) {
-    //console.log("query: " + req.query.color);
-   // console.log("flower colors " + flower.colors + " flower bloomtime: " + flower.bloomMonths);
+   Flower.find(function(err, flowers){
+    if(err){ return next(err); }
+    var filteredFlowers = flowers.filter(function(flower) {
+        //console.log(flower);
     if(flower.colors.search(req.query.color)>=0 && flower.bloomMonths.search(req.query.month)>=0  && flower.variety.search(req.query.variety)>=0)
       return true;
   });
   
-  //console.log("Filtered FLowers: " + filteredFlowers);
   filteredFlowers.sort(compare);
- // console.log("Filtered FLowers: " + filteredFlowers);
   res.status(200).json(filteredFlowers);
-    }
-    else {
-      console.log("No Documents found");
-    }
+  
   });
- 
+  
 
 });
 
+router.put('/getflowers/:id', function(req, res) {
+    //console.log("In PUT Flowers Edit: " +req.params.id );
+     
+   //console.log(req.body);
+    
+    Flower.findById(req.params.id, function(err, flower) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+    //console.log("found flower: " + flower);
+    //console.log(req.params);
+    //console.log("change name: " + req.body.name);
+    flower.name = req.body.name;
+    
+      
+    flower.colors = req.body.colors;
+    flower.imageUrl = req.body.imageUrl;
+    flower.bloomMonths = req.body.bloomMonths;
+    flower.infoLink = req.body.infoLink; 
+    flower.variety =  req.body.variety;
+    
+    flower.save();
+      console.log('Updated document from the "flowers" collection.');
+      res.end('{"success" : "Updated Successfully", "status" : 200}');
+    }
+  });
+});
+
+
 router.delete('/getflowers/:id', function(req, res) {
     console.log("In GET Flowers DELETE: " +req.params.id );
-    
-    let deletString = "ObjectId('"+req.params.id+"')";
-    console.log("dlete string: "+deletString);
-   collection.deleteOne({_id: new mongodb.ObjectId(req.params.id)}, function(err, result) {
+
+   Flower.deleteOne({ 
+      _id: req.params.id 
+    }, function(err, result) {
     if (err) {
       console.log(err);
     }
@@ -145,19 +138,16 @@ router.delete('/getflowers/:id', function(req, res) {
   });
 });
 
-router.post('/getflowers', function(req, res) {
-    console.log("In GETFlowers Post");
-    console.log(req.body);
-   collection.insertOne(req.body, function(err, result) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      console.log('Inserted document into the "flowers" collection.');
-      res.end('{"success" : "Updated Successfully", "status" : 200}');
-    }
+
+router.post('/getflowers', function (req, res, next){
+  console.log("ADDING Flower: " + req.body);
+  const flower = new Flower(req.body);
+  flower.save(function(err, comment){
+    if(err){ return next(err); }
+    res.json(comment);
   });
 });
+
 router.get('/mailingList', function(req, res) {
     console.log("In Mailing List GET");
     console.log(req.body);

@@ -34,6 +34,7 @@ var app = new Vue({
   created() {
     console.log("created");
     //console.log("Created Color Drop: " + this.ColorDrop);
+   
     this.getflowers();
     //this.getvarieties();
     this.colors.sort();
@@ -95,6 +96,7 @@ var app = new Vue({
       //console.log(url);
       try {
         let response = await axios.get(url);
+        console.log("response: " + response.data);
         this.flowers = response.data;
         //console.log("get varieties");
         for(var i=0; i<response.data.length; i++)
@@ -105,10 +107,11 @@ var app = new Vue({
           var curColors = response.data[i].colors.split(', ');
           for(var j = 0; j<curColors.length; j++)
           {
-            //console.log(curColors[j]);
-            //console.log(this.colors);
-            if(this.colors.indexOf(curColors[j])<0)
-              this.colors.push(curColors[j]);
+            let lowerCaseColor = curColors[j].toLowerCase();
+            console.log(lowerCaseColor);
+            console.log(this.colors);
+            if(this.colors.indexOf(lowerCaseColor)<0 && lowerCaseColor!="")
+              this.colors.push(lowerCaseColor);
           } 
         }
         this.setSuggestion("");
@@ -122,7 +125,7 @@ var app = new Vue({
       }
        
     },
-    
+   
     async addFlower(){
       var url = "http://www.foothillfarmflowers.com/flowers/getflowers";
       console.log("adding flower: name: " + this.flowerName + 
@@ -143,16 +146,17 @@ var app = new Vue({
         .catch(e => {
           console.log(e);
         });
-        if(this.varieties.indexOf(this.flowerVariety)<0)
+        if(this.varieties.indexOf(this.flowerVariety)<0 & this.flowerVariety!="")
           this.varieties.push(this.flowerVariety);
-       
+       //add color to colors array if it is new
         var curColors = this.flowerColors.split(', ');
           for(var j = 0; j<curColors.length; j++)
           {
+            let lowerCaseColor = curColors[j].toLowerCase();
             //console.log(curColors[j]);
             //console.log(this.colors);
-            if(this.colors.indexOf(curColors[j])<0)
-              this.colors.push(curColors[j]);
+            if(this.colors.indexOf(lowerCaseColor<0) && lowerCaseColor!="")
+              this.colors.push(lowerCaseColor);
           } 
       //console.log("added: " + this.flowerVariety);
       //console.log(this.varieties);
@@ -183,12 +187,16 @@ var app = new Vue({
       async editItem(item) {
         var url = "http://www.foothillfarmflowers.com/flowers/getflowers/";
       try {
-        let response = await axios.put(url + item._id, {
-          //name: item.name,
-          //desc: this.findItem.desc,
+        let response = axios.put(url + item._id, {
+          name: item.name,
+          colors: item.colors,
+          imageUrl: item.imageUrl,
+          bloomMonths: item.bloomMonths,
+          infoLink: item.infoLink, 
+          variety: item.variety
         });
         //this.findItem = null;
-        this.getFlowers();
+        this.getflowers();
         return true;
       } catch (error) {
         console.log(error);
