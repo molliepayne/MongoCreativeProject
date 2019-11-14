@@ -127,21 +127,23 @@ router.get('/getflowers', function(req, res, next) {
  
 
 });
-router.delete('/getflowers/:id', async (req, res) => {
-  console.log("In DELTE on server: " + req.params.id);
-  console.log("Collection before: " + collection.find());
-  try {
-    await collection.deleteOne({ 
-      _id: req.params.id 
-    });
-    console.log("Collection after: " +collection.find());
-    res.sendStatus(200);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
 
+router.delete('/getflowers/:id', function(req, res) {
+    console.log("In GET Flowers DELETE: " +req.params.id );
+    
+    let deletString = "ObjectId('"+req.params.id+"')";
+    console.log("dlete string: "+deletString);
+   collection.deleteOne({_id: new mongodb.ObjectId(req.params.id)}, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log(result.deletedCount);
+      console.log('Deleted document from the "flowers" collection.');
+      res.end('{"success" : "Updated Successfully", "status" : 200}');
+    }
+  });
+});
 
 router.post('/getflowers', function(req, res) {
     console.log("In GETFlowers Post");

@@ -169,13 +169,16 @@ var app = new Vue({
         var url = "http://www.foothillfarmflowers.com/flowers/getflowers/";
        console.log("delete Item: "+item._id)
       try {
+        console.log("in try");
         let response = axios.delete(url + item._id);
-        
+        console.log("retunred response: " + response);
+        this.getflowers();
         return true;
       } catch (error) {
         console.log(error);
       }
-      this.getflowers();
+      
+      
     },
       async editItem(item) {
         var url = "http://www.foothillfarmflowers.com/flowers/getflowers/";
