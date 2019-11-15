@@ -28,6 +28,7 @@ var app = new Vue({
     isOpen: false,
     suggestions: [],  
     findItem: null,
+    editAll: false,
     
 
   },
@@ -96,7 +97,7 @@ var app = new Vue({
       //console.log(url);
       try {
         let response = await axios.get(url);
-        console.log("response: " + response.data);
+        //console.log("response: " + response.data);
         this.flowers = response.data;
         //console.log("get varieties");
         for(var i=0; i<response.data.length; i++)
@@ -108,8 +109,8 @@ var app = new Vue({
           for(var j = 0; j<curColors.length; j++)
           {
             let lowerCaseColor = curColors[j].toLowerCase();
-            console.log(lowerCaseColor);
-            console.log(this.colors);
+            //console.log(lowerCaseColor);
+            //console.log(this.colors);
             if(this.colors.indexOf(lowerCaseColor)<0 && lowerCaseColor!="")
               this.colors.push(lowerCaseColor);
           } 
@@ -117,6 +118,7 @@ var app = new Vue({
         this.setSuggestion("");
         this.onChange();
         this.colors.sort();
+        this.varieties.sort();
         //console.log(this.varieties);
         return true;
       }
@@ -134,7 +136,7 @@ var app = new Vue({
         " bloomMonths: " + this.bloomMonths + 
         " infoLink: " + this.infoLink +
         " variety: " + this.findVariety);
-      axios.post(url, {
+       try{axios.post(url, {
         name: this.flowerName,
         colors: this.flowerColors,
         imageUrl: this.imageUrl,
@@ -167,7 +169,11 @@ var app = new Vue({
       this.bloomMonths = '';
       this.infoLink = '';
       this.flowerVariety = '';
-      
+       }
+       catch(error)
+       {
+         console.log(error);
+       }
     },
      async deleteItem(item) {
         var url = "http://www.foothillfarmflowers.com/flowers/getflowers/";
@@ -184,6 +190,15 @@ var app = new Vue({
       
       
     },
+    editAllFlowers(){
+      this.editAll = true;
+      for(let i=0; i<this.flowers.length; i++)
+      {
+        this.editItem(this.flowers[i]);
+      }
+      this.getflowers();
+      this.editAll = false;
+    },
       async editItem(item) {
         var url = "http://www.foothillfarmflowers.com/flowers/getflowers/";
       try {
@@ -196,7 +211,8 @@ var app = new Vue({
           variety: item.variety
         });
         //this.findItem = null;
-        this.getflowers();
+        if(!editAllFlowers)
+          this.getflowers();
         return true;
       } catch (error) {
         console.log(error);

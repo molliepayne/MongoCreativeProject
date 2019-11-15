@@ -77,13 +77,16 @@
               In Bloom: <input v-model="flowers[index].bloomMonths"><br>
               Colors: <input v-model="flowers[index].colors">
               Variety: <input v-model="flowers[index].variety"></p>
-              <button @click="deleteItem(flowers[index])">Delete</button>
-        <button @click="editItem(flowers[index])">Edit</button>
+              <button class="userInputButton" @click="deleteItem(flowers[index])">Delete</button>
+        <button class="userInputButton" @click="editItem(flowers[index])">Save Changes</button>
             </div>
            
           </div>
+          
          <hr>
+         
         </div>
+        <button class="userInputButton" @click="editAllFlowers()">Save All Changes</button>
     </div>
     <div v-else>
       <hr>

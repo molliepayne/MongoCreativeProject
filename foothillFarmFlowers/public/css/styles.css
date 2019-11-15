@@ -64,20 +64,41 @@ opacity: .5;
 
 }
 .userInput{
-     position: relative;
+    position: relative;
     width: 100%;
     font-size: 16px;
     text-align: left;
+    
 }
 
 
-  .autocomplete-results {
+.userInputButton:hover {
+  background-color: darkgray; /* Green */
+  color: white;
+}
+
+.userInputButton{
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.userInputButton:active {
+  background-color: pink;
+ 
+  transform: translateY(4px);
+}
+
+
+.autocomplete-results {
     padding: 0;
     margin: 0;
     border: 1px solid #eeeeee;
     height: 100%;
     overflow: auto;
     font-size: 16px;
+    float: none;
   }
 
   .autocomplete-result {
@@ -123,7 +144,8 @@ top: 55px;
    
 }
 .navbar{
-    max-height: 50px;
+    padding: 0;
+   
 }
 
 a:link,
@@ -181,17 +203,7 @@ li:focus-within a {
     outline: none;
 }
 
-ul li ul {
-    background: orange;
-    visibility: hidden;
-    opacity: 0;
-    min-width: 5rem;
-    position: absolute;
-    transition: all 0.5s ease;
-    margin-top: 1rem;
-    left: 0;
-    display: none;
-}
+
 
 ul li:hover>ul,
 ul li:focus-within>ul,

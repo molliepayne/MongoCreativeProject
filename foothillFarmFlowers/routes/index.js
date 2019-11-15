@@ -91,33 +91,23 @@ router.get('/getflowers', function(req, res, next) {
 
 });
 
-router.put('/getflowers/:id', function(req, res) {
+router.put('/getflowers/:flower', function(req, res) {
     //console.log("In PUT Flowers Edit: " +req.params.id );
      
    //console.log(req.body);
     
-    Flower.findById(req.params.id, function(err, flower) {
-    if (err) {
-      console.log(err);
-    }
-    else {
-    //console.log("found flower: " + flower);
-    //console.log(req.params);
-    //console.log("change name: " + req.body.name);
-    flower.name = req.body.name;
+    //executed in param route, req.flower contains the flower we need to update.
+    req.flower.name = req.body.name;
+    req.flower.colors = req.body.colors;
+    req.flower.imageUrl = req.body.imageUrl;
+    req.flower.bloomMonths = req.body.bloomMonths;
+    req.flower.infoLink = req.body.infoLink; 
+    req.flower.variety =  req.body.variety;
     
-      
-    flower.colors = req.body.colors;
-    flower.imageUrl = req.body.imageUrl;
-    flower.bloomMonths = req.body.bloomMonths;
-    flower.infoLink = req.body.infoLink; 
-    flower.variety =  req.body.variety;
+    req.flower.save();
+    console.log('Updated document from the "flowers" collection.');
+    res.end('{"success" : "Updated Successfully", "status" : 200}');
     
-    flower.save();
-      console.log('Updated document from the "flowers" collection.');
-      res.end('{"success" : "Updated Successfully", "status" : 200}');
-    }
-  });
 });
 
 
@@ -140,7 +130,7 @@ router.delete('/getflowers/:id', function(req, res) {
 
 
 router.post('/getflowers', function (req, res, next){
-  console.log("ADDING Flower: " + req.body);
+ // console.log("ADDING Flower: " + req.body);
   const flower = new Flower(req.body);
   flower.save(function(err, comment){
     if(err){ return next(err); }
