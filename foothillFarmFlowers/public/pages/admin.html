@@ -16,14 +16,33 @@
   <div class="container">
        <h3> Enter A New Flower</h3>
     <form class="selector" v-on:submit.prevent="addFlower">
-        <div class="userInput">
-      Name: <input  type="text" v-model="flowerName"><br><br>
-      Flower Colors: <input  type="text" v-model="flowerColors"><br><br>
-      Image URL: <input type="url" v-model="imageUrl"><br><br>
-      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
-      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
+        <div class="container">
+          <div  class="container userInput">
+      Name: <input  type="text" v-model="flowerName"></div>
+       <div  class="container userInput">
+      Image URL: <input type="url" v-model="imageUrl"></div>
+      <div  class="container userInput">Link to Image Website: <input type="url" v-model="infoLink"></div>
+      <fieldset  class="userInput group">
+      <legend>Flower Colors:</legend>  
+      <ul class="checkbox"> 
+        <li v-for="color in colors">
+          <input type="checkbox" :id="color+1" v-model="flowerColors" :value="' '+color"/>
+          <label :for="color+1">{{color}}</label>
+        </li>
+      </ul>
+     </fieldset>
+      <fieldset  class="userInput group">
+        <legend>Months in bloom:</legend> 
+      <ul class="checkbox"> 
+        <li v-for="month in months">
+          <input type="checkbox" :id="month+1" v-model="bloomMonths" :value="''+month"/>
+          <label :for="month+1">{{month}}</label>
+        </li>
+      </ul>
+      </fieldset>
       
-        Flower Variety:  <input type="text"  v-model="findVariety" @input="onChange"/>
+      
+       <div class="container userInput"> Flower Variety:  <input type="text"  v-model="findVariety" @input="onChange"/>
         <ul   class="autocomplete-results">
             <li  v-for="(variety, i) in suggestions"
       :key="i" @click="setSuggestion(variety)"
@@ -31,7 +50,7 @@
               {{ variety}}  
             </li><br>
         </ul>
-     
+     </div>
  
       <button type="submit">Add</button>
       </div>
@@ -70,15 +89,23 @@
               
             <div class="col-md-4"><a :href="flower.infoLink"><img class='flowerPic' v-bind:src="flower.imageUrl" /></a><br><a :href="flower.infoLink">Image Source</a></div>
             <div class="col-md-8">
-                <p class="userInput">
+                <div class="userInput">
+                  
+                  
+                  
+                  
+                  
+                  
                     Name: <input v-model="flowers[index].name"><br>
                     Image URL: <input v-model="flowers[index].imageUrl"><br>
                     Image Source: <input v-model="flowers[index].infoLink"><br>
+                    
               In Bloom: <input v-model="flowers[index].bloomMonths"><br>
               Colors: <input v-model="flowers[index].colors">
-              Variety: <input v-model="flowers[index].variety"></p>
+              Variety: <input v-model="flowers[index].variety">
               <button class="userInputButton" @click="deleteItem(flowers[index])">Delete</button>
         <button class="userInputButton" @click="editItem(flowers[index])">Save Changes</button>
+        </div>
             </div>
            
           </div>

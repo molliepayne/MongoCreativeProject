@@ -73,6 +73,7 @@
                   <div class="insta-header">
                     <div class="insta">
                     <div>{{postDate(insta.caption.created_time*1000)}}</div>
+                    
                     <div v-if="insta.location">Location: {{insta.location.name}}</div>
                     
                     </div></div>
@@ -127,7 +128,7 @@
                  <div class="insta-header">
                    <div class="insta">
                       {{postDate(instagrams[index+2].caption.created_time*1000)}}
-                      <div v-if="instagrams[index+2].location">Location: {{instagrams[index+1].location.name}}</div>
+                      <div v-if="instagrams[index+2].location">Location: {{instagrams[index+2].location.name}}</div>
                        </div></div>
                       <div class="instaContainer">
                         <a :href="instagrams[index+2].link">

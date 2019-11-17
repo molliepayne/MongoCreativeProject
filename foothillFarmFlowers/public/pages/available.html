@@ -82,7 +82,9 @@
         <div v-for="flower in flowers">
           <div class="row">
             <div class="col-md-4"><a :href="flower.infoLink"><img class='flowerPic' v-bind:src="flower.imageUrl" /></a><br><a :href="flower.infoLink">Image Source</a></div>
-            <div class="col-md-8"><h2>{{ flower.name }}</h2>
+            <div class="col-md-8">
+              <h2>{{ flower.name }}</h2>
+              <h2>Variety: {{ flower.variety }}</h2>
               <p>In Bloom: {{flower.bloomMonths}}<br>
               Colors: {{flower.colors}}</p>
             </div>
@@ -98,17 +100,7 @@
       <h3>Try selecting a different color or a different month.</h3>
     </div>
     <hr>
-    <h3> Enter A New Flower</h3>
-    <form class="selector" v-on:submit.prevent="addFlower">
-        
-      Name: <input  type="text" v-model="flowerName"><br><br>
-      Flower Colors: <input  type="text" v-model="flowerColors"><br><br>
-      Image URL: <input type="url" v-model="imageUrl"><br><br>
-      Months in bloom: <input type="text" v-model="bloomMonths"/><br><br>
-      Link to Image Website: <input type="url" v-model="infoLink"><br><br>
-      Flower Variety: <input type="text" v-model="flowerVariety">
-      <button type="submit">Add</button>
-    </form>
+    
   </div>
   <hr>
 
@@ -127,7 +119,7 @@
           <a href="https://www.instagram.com/foothillfarmflowers/" target="_blank"><img class="icon"  src="../images/instagram-icon.png" class="img-fluid mb-4" alt="instagram" ></a>
         </div>
         <div class="col">
-          <a href="https://github.com/molliepayne/NodeCreativeProject" target="_blank"><img class="icon" src="../images/git hub icon.png" class="img-fluid mb-4" alt="github" ></a>
+          <a href="https://github.com/molliepayne/MongoCreativeProject/foothillFarmflowers" target="_blank"><img class="icon" src="../images/git hub icon.png" class="img-fluid mb-4" alt="github" ></a>
         </div>
         <div class="col">
           <a href="https://www.facebook.com/foothillfarmflowers/" target="_blank"><img class="icon" src="../images/facebook icon.png" class="img-fluid mb-4" alt="facebook" ></a>
@@ -136,35 +128,7 @@
       <!--Grid row-->
     </div>
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="nav navbar-nav justify-content-center flex-fill">
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="garden_journal.html">Garden Journal</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link active" href="order blooms.html">Buy Blooms</a>
-            <ul class="dropdown" aria-label="submenu">
-              <li><a href="available.html">Availbility</a></li>
-              <li><a href="order blooms.html">Join CSA</a></li>
-              <li><a href="#">Roadside Stand</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-item nav-link" href="about.html">Our Story</a>
-          </li>
-        </ul>
-
-      </div>
-      <hr>
-    </nav>
+   
     </div>
     <hr> All Rights Reserved, Mollie Payne<br>
 

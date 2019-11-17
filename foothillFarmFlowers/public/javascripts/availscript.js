@@ -30,10 +30,7 @@ var app = new Vue({
   created() {
     //console.log("Created Color Drop: " + this.ColorDrop);
     this.getflowers();
-    //this.getvarieties();
-    this.colors.sort();
-    
-
+   
   },
   computed: {
 
@@ -58,45 +55,77 @@ var app = new Vue({
 
       return moment(date).format('MMMM Do YYYY h:mm A');
     },
-    async getflowers() {
-       var month = "";
-      if(this.MonthDrop != "Show All")
+     async getflowers() {
+      var month = "";
+      if (this.MonthDrop != "Show All")
         month = this.MonthDrop;
       var variety = "";
-      if(this.VarietyDrop != "Show All")
+      if (this.VarietyDrop != "Show All")
         variety = this.VarietyDrop;
       var color = "";
-      if(this.ColorDrop != "Show All")
+      if (this.ColorDrop != "Show All")
         color = this.ColorDrop;
       this.varieties.sort();
-      var url = "http://www.foothillfarmflowers.com/flowers/getflowers?color=" + color + "&month=" + month+ "&variety=" + variety;
-      //console.log(url);
+      this.colors.sort();
+      var url = "http://www.foothillfarmflowers.com/flowers/getflowers?color=" + color + "&month=" + month + "&variety=" + variety;
+      console.log(url);
       try {
         let response = await axios.get(url);
+        console.log("updating flowers");
         this.flowers = response.data;
-        //console.log("get varieties");
-        for(var i=0; i<response.data.length; i++)
-        {
-         //populate varieties dropdown based on current data 
-          if(this.varieties.indexOf(response.data[i].variety)<0)
+        //add colors and varities to drop downs
+        for (var i = 0; i < response.data.length; i++) {
+          //populate varieties dropdown based on current data 
+          if (this.varieties.indexOf(response.data[i].variety) < 0)
             this.varieties.push(response.data[i].variety);
           var curColors = response.data[i].colors.split(', ');
-          for(var j = 0; j<curColors.length; j++)
-          {
-            //console.log(curColors[j]);
-            //console.log(this.colors);
-            if(this.colors.indexOf(curColors[j])<0)
-              this.colors.push(curColors[j]);
-          } 
+          for (var j = 0; j < curColors.length; j++) {
+            let lowerCaseColor = curColors[j].toLowerCase();
+            if (this.colors.indexOf(lowerCaseColor) < 0 && lowerCaseColor != "")
+              this.colors.push(lowerCaseColor);
+          }
         }
+        this.setSuggestion("");
+        this.onChange();
         this.colors.sort();
-        //console.log(this.varieties);
+        this.varieties.sort();
+
         return true;
       }
       catch (error) {
         console.log(error);
       }
+
+    },
+
+    async addFlower() {
+      var url = "http://www.foothillfarmflowers.com/flowers/getflowers";
+      try {
+        axios.post(url, {
+            name: this.flowerName,
+            colors: this.flowerColors,
+            imageUrl: this.imageUrl,
+            bloomMonths: this.bloomMonths,
+            infoLink: this.infoLink,
+            variety: this.findVariety
+          })
+          .then(response => {})
+          .catch(e => {
+            console.log(e);
+          });
        
+        //refresh page and reset input values
+        this.getflowers();
+        this.flowerName = '';
+        this.flowerColors = '';
+        this.imageUrl = '';
+        this.bloomMonths = '';
+        this.infoLink = '';
+        this.flowerVariety = '';
+      }
+      catch (error) {
+        console.log(error);
+      }
     },
     
     

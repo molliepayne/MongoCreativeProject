@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require("request");
-
+var flower = require('../models/Flowers');
 var mongoose = require('mongoose');
 var Flower = mongoose.model('Flower');
 
@@ -9,19 +9,7 @@ var fs = require('fs');
 var BootstrapVue= require("bootstrap-vue");
 var mailingList = [];
 
-function compare(a, b) {
-  //console.log("in compare a: " + a +" b: " +  b);
-  const nameA = a.name.toUpperCase();
-  const nameB = b.name.toUpperCase();
-  
-  let comparison = 0;
-  if (nameA > nameB) {
-    comparison = 1;
-  } else if (nameA < nameB) {
-    comparison = -1;
-  }
-  return comparison;
-}
+
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -83,10 +71,10 @@ router.get('/getflowers', function(req, res, next) {
       return true;
   });
   
-  filteredFlowers.sort(compare);
+  
   res.status(200).json(filteredFlowers);
   
-  });
+  }).sort({variety:1, name: 1});
   
 
 });
